@@ -81,9 +81,9 @@ def MedirAgua(cafeteira):
   print('--- [SENSOR] Medindo quantidade de água.')
   # GPIO.output(1, GPIO.HIGH)
   tempoTotal = cafeteira.TempoSensorAgua()
-  print('tempo total', tempoTotal)
   # GPIO.output(1, GPIO.LOW)
   distancia = (tempoTotal * VEL_SOM) / 2
+  print('distancia agua', distancia)
   return distancia
 
 def MedirCafe(cafeteira):
@@ -92,6 +92,7 @@ def MedirCafe(cafeteira):
   tempoTotal = cafeteira.TempoSensorCafe()
   # GPIO.output(3, GPIO.LOW)
   distancia = (tempoTotal * VEL_SOM) / 2
+  print('distancia cafe', distancia)
   return distancia
 
 
@@ -116,6 +117,7 @@ def comandosPreFazerCafe(cafeteira):
         break
 
 def ExecutarCafeteira():
+  # cafeteira = Cafeteira(10, 15)
   cafeteira = Cafeteira(random.randint(0, 100), random.randint(0, 100))
   
   cmdLigarCafeteira = input("Ligar cafeteira? [S/N] ")

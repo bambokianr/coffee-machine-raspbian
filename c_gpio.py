@@ -3,24 +3,23 @@ import time
 import traceback
 import random
 
-# Convenção
-# Recipiente cheio -> distância = 0
-# Recipiente vazio -> distância = 0.17 m
-
-# definir que:
-# menos que 10% de água - não rola fazer café --> 10% - distância do sensor a superfície = 0.153
-# menos que 15% de café - não rola fazer café --> X% - distância do sensor a superfície = 0.12Y
+GPIO.setmode(GPIO.BCM)
 
 VEL_SOM = 340 # em m/s
 
-GPIO.setmode(GPIO.BCM)
+# Sobre a cafeteira, definiu-se:
+# Recipiente cheio -> distância superfície sensor: 0m
+# Recipiente vazio -> distância superfície sensor: 0.17m
+
+# porcentagem de água necessária para preparo de 1 café -> 10% => equivale a distância superfície sensor = 0.153m
+# porcentagem de pó necessário para preparo de 1 café -> 15% => equivale a distância superfície sensor = 0.1445m
 
 class Cafeteira:
-  # pino 2 - out - cafeteiraLigada
+  # pino 2 - out - cafeteira ligada?
   GPIO.setup(2, GPIO.OUT, initial = GPIO.LOW)
-  # pino 3 - out - cafeteiraPronta
+  # pino 3 - out - cafeteira apta?
   GPIO.setup(3, GPIO.OUT, initial = GPIO.LOW)
-  # pino 4 - out - café pronto ou não
+  # pino 4 - out - café pronto?
   GPIO.setup(4, GPIO.OUT, initial = GPIO.LOW)
 
   def __init__(self, porcentAgua, porcentCafe):
@@ -29,7 +28,7 @@ class Cafeteira:
     self.porcentAgua = porcentAgua
     self.porcentCafe = porcentCafe
 
-  def ligarCafeteira(self): # pino LED 1 - acender
+  def ligarCafeteira(self):
     if(self.cafeteiraLigada == True):
       print('--- Cafeteira já está ligada.')
     else:
@@ -37,7 +36,7 @@ class Cafeteira:
       GPIO.output(2, GPIO.HIGH)
       print('--- Cafeteira ligada.')
   
-  def desligarCafeteira(self): # pino LED 1 - apagar
+  def desligarCafeteira(self):
     if(self.cafeteiraLigada == True):
       self.cafeteiraLigada = False
       GPIO.output(2, GPIO.LOW)
@@ -55,7 +54,6 @@ class Cafeteira:
     print('--- {}% de água disponível.'.format(self.porcentAgua))
     print('--- {}% de pó de café disponível.'.format(self.porcentCafe))
 
-    # se pode ou não realizar o preparo de um café
     if(distSensorAgua > 0.154 or distSensorCafe > 0.145):
       self.cafeteiraPronta = False
       GPIO.output(3, GPIO.LOW)
@@ -78,16 +76,19 @@ class Cafeteira:
     if(self.cafeteiraPronta == True):
       self.porcentAgua -= 10
       self.porcentCafe -= 15
+      time.sleep(3)
       print('--- [CAFETEIRA] Café pronto.')
       GPIO.output(4, GPIO.HIGH)
       self.cafeteiraPronta = False
       GPIO.output(3, GPIO.LOW)
 
 def SensorAgua():
+    # pinos 17 e 18 - sensor de distância - água
     GPIO.setup(17, GPIO.OUT, initial=GPIO.LOW) # TRIGGER
     GPIO.setup(18, GPIO.IN) # ECHO
 
 def SensorCafe():
+    # pinos 22 e 23 - sensor de distância - pó de café
     GPIO.setup(22, GPIO.OUT, initial=GPIO.LOW) # TRIGGER
     GPIO.setup(23, GPIO.IN) # ECHO
 
@@ -144,7 +145,6 @@ def ExecutarCafeteira():
       cmdFazerCafe = input("Fazer café? [S/N] ")
       # ! FAZER CAFÉ
       while(cafeteira.cafeteiraPronta == True and cmdFazerCafe.upper() == 'S'):
-        time.sleep(3)
         cafeteira.fazerCafe()
         cmdFazerCafe = input("Fazer outro café? [S/N] ")
         if(cmdFazerCafe.upper() == 'S'):
