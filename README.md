@@ -3,6 +3,7 @@
 
 **Proposta** - Simulação de controle de uma cafeteira em um sistema operacional Linux embarcado executado em máquina virtual.
 
+![til](./assets/coffeemachine.gif)
 
 ### :one: Seção 1 - Objetivos do trabalho
 A atividade proposta engloba o estudo e a aplicação de um sistema operacional Linux para o embarcado Raspberry Pi, de forma a configurar a versão escolhida para torná-la enxuta o suficiente a fim de não afetar o desempenho do programa proposto devido às restrições impostas pelo hardware dessa máquina.
