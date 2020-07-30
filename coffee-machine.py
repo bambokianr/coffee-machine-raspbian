@@ -105,35 +105,26 @@ def comandosPreFazerCafe(cafeteira):
         cafeteira.desligarCafeteira()
         break
 
-def Main():
+def ExecutarCafeteira():
   cafeteira = Cafeteira(random.randint(0, 100), random.randint(0, 100))
+  
   cmdLigarCafeteira = input("Ligar cafeteira? [S/N] ")
+  # ! LIGAR CAFETEIRA
   if(cmdLigarCafeteira.upper() == 'S'):
     cafeteira.ligarCafeteira()
-    
     comandosPreFazerCafe(cafeteira)
 
     if(cafeteira.cafeteiraPronta == True):
       cmdFazerCafe = input("Fazer café? [S/N] ")
-      if(cmdFazerCafe.upper() == 'S'):
+      # ! FAZER CAFÉ
+      while(cafeteira.cafeteiraPronta == True and cmdFazerCafe.upper() == 'S'):
         cafeteira.fazerCafe()
-        cmdFazerOutroCafe = input("Fazer outro café? [S/N] ")
-        while(cmdFazerOutroCafe.upper() == 'S'):
+        cmdFazerCafe = input("Fazer outro café? [S/N] ")
+        if(cmdFazerCafe.upper() == 'S'):
           comandosPreFazerCafe(cafeteira)
-          cafeteira.fazerCafe()
-          cmdFazerOutroCafe = input("Fazer outro café? [S/N] ")
-          if(cmdFazerOutroCafe.upper() == 'N'):
-            cafeteira.desligarCafeteira()
-            break
-        if(cmdFazerOutroCafe.upper() == 'N'):
-          cafeteira.desligarCafeteira()
-          return
         
-      elif(cmdFazerCafe.upper() == 'N'):
+      # ! NÃO FAZER CAFÉ
+      if(cmdFazerCafe.upper() == 'N'):
         cafeteira.desligarCafeteira()
-        return
 
-  elif(cmdLigarCafeteira.upper() == 'N'):
-    return
-
-Main()
+ExecutarCafeteira()
