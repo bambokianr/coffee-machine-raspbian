@@ -6,8 +6,8 @@ import random
 VEL_SOM = 340 # em m/s
 
 # Convenção
-# Recipiente cheio -> distancia = 0
-# Recipiente vazio -> distancia = 0.17 m
+# Recipiente cheio -> distância = 0
+# Recipiente vazio -> distância = 0.17 m
 
 # definir que:
 # menos que 10% de água - não rola fazer café --> 10% - distância do sensor a superfície = 0.153
@@ -67,6 +67,15 @@ class Cafeteira:
       print('--- [CAFETEIRA] Café pronto.')
       self.cafeteiraPronta = False
 
+def SensorAgua():
+    # GPIO.setup(1, GPIO.OUT, initial=GPIO.LOW) # TRIGGER
+    # GPIO.setup(2, GPIO.IN) # ECHO
+    pass
+
+def SensorCafe():
+    # GPIO.setup(3, GPIO.OUT, initial=GPIO.LOW) # TRIGGER
+    # GPIO.setup(4, GPIO.IN) # ECHO
+    pass
 
 def MedirAgua(cafeteira):
   print('--- [SENSOR] Medindo quantidade de água.')
