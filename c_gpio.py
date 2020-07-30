@@ -3,8 +3,6 @@ import time
 import traceback
 import random
 
-VEL_SOM = 340 # em m/s
-
 # Convenção
 # Recipiente cheio -> distância = 0
 # Recipiente vazio -> distância = 0.17 m
@@ -13,8 +11,17 @@ VEL_SOM = 340 # em m/s
 # menos que 10% de água - não rola fazer café --> 10% - distância do sensor a superfície = 0.153
 # menos que 15% de café - não rola fazer café --> X% - distância do sensor a superfície = 0.12Y
 
+VEL_SOM = 340 # em m/s
+
+GPIO.setmode(GPIO.BCM)
+
 class Cafeteira:
-  # DEFINIR PINOS!!!
+  # pino 2 - out - cafeteiraLigada
+  GPIO.setup(2, GPIO.OUT, initial = GPIO.LOW)
+  # pino 3 - out - cafeteiraPronta
+  GPIO.setup(3, GPIO.OUT, initial = GPIO.LOW)
+  # pino 4 - out - café pronto ou não
+  GPIO.setup(4, GPIO.OUT, initial = GPIO.LOW)
 
   def __init__(self, porcentAgua, porcentCafe):
     self.cafeteiraLigada = False
@@ -27,11 +34,13 @@ class Cafeteira:
       print('--- Cafeteira já está ligada.')
     else:
       self.cafeteiraLigada = True
+      GPIO.output(2, GPIO.HIGH)
       print('--- Cafeteira ligada.')
   
   def desligarCafeteira(self): # pino LED 1 - apagar
     if(self.cafeteiraLigada == True):
       self.cafeteiraLigada = False
+      GPIO.output(2, GPIO.LOW)
       print('--- Cafeteira desligada.')
   
   def TempoSensorAgua(self):
@@ -40,6 +49,7 @@ class Cafeteira:
     return 0.001 * (100 - self.porcentCafe) / 100
 
   def checarCafeteiraPronta(self):
+    GPIO.output(4, GPIO.LOW)
     distSensorAgua = MedirAgua(self)
     distSensorCafe = MedirCafe(self)
     print('--- {}% de água disponível.'.format(self.porcentAgua))
@@ -48,12 +58,14 @@ class Cafeteira:
     # se pode ou não realizar o preparo de um café
     if(distSensorAgua > 0.154 or distSensorCafe > 0.145):
       self.cafeteiraPronta = False
+      GPIO.output(3, GPIO.LOW)
       if(distSensorAgua > 0.154):
         print('--- [CAFETEIRA] Pausa no processo - água insuficiente.')
       if(distSensorCafe > 0.145):
         print('--- [CAFETEIRA] Pausa no processo - pó de café insuficiente.')
     else:
       self.cafeteiraPronta = True
+      GPIO.output(3, GPIO.HIGH)
       print('--- [CAFETEIRA] Cafeteira pronta para preparar o café.')
 
   def adicionarAgua(self, qtd):
@@ -67,29 +79,35 @@ class Cafeteira:
       self.porcentAgua -= 10
       self.porcentCafe -= 15
       print('--- [CAFETEIRA] Café pronto.')
+      GPIO.output(4, GPIO.HIGH)
       self.cafeteiraPronta = False
+      GPIO.output(3, GPIO.LOW)
 
 def SensorAgua():
-    GPIO.setup(1, GPIO.OUT, initial=GPIO.LOW) # TRIGGER
-    GPIO.setup(2, GPIO.IN) # ECHO
+    GPIO.setup(17, GPIO.OUT, initial=GPIO.LOW) # TRIGGER
+    GPIO.setup(18, GPIO.IN) # ECHO
 
 def SensorCafe():
-    GPIO.setup(3, GPIO.OUT, initial=GPIO.LOW) # TRIGGER
-    GPIO.setup(4, GPIO.IN) # ECHO
+    GPIO.setup(22, GPIO.OUT, initial=GPIO.LOW) # TRIGGER
+    GPIO.setup(23, GPIO.IN) # ECHO
 
 def MedirAgua(cafeteira):
   print('--- [SENSOR] Medindo quantidade de água.')
-  GPIO.output(1, GPIO.HIGH)
+  GPIO.output(17, GPIO.HIGH)
   tempoTotal = cafeteira.TempoSensorAgua()
-  GPIO.output(1, GPIO.LOW)
+  #time.sleep(tempoTotal)
+  time.sleep(2)
+  GPIO.output(17, GPIO.LOW)
   distancia = (tempoTotal * VEL_SOM) / 2
   return distancia
 
 def MedirCafe(cafeteira):
   print('--- [SENSOR] Medindo quantidade de pó de café.')
-  GPIO.output(3, GPIO.HIGH)
+  GPIO.output(22, GPIO.HIGH)
   tempoTotal = cafeteira.TempoSensorCafe()
-  GPIO.output(3, GPIO.LOW)
+  #time.sleep(tempoTotal)
+  time.sleep(2)
+  GPIO.output(22, GPIO.LOW)
   distancia = (tempoTotal * VEL_SOM) / 2
   return distancia
 
@@ -126,6 +144,7 @@ def ExecutarCafeteira():
       cmdFazerCafe = input("Fazer café? [S/N] ")
       # ! FAZER CAFÉ
       while(cafeteira.cafeteiraPronta == True and cmdFazerCafe.upper() == 'S'):
+        time.sleep(3)
         cafeteira.fazerCafe()
         cmdFazerCafe = input("Fazer outro café? [S/N] ")
         if(cmdFazerCafe.upper() == 'S'):
@@ -136,6 +155,10 @@ def ExecutarCafeteira():
         cafeteira.desligarCafeteira()
 
 def Main():
+  # GPIO.setmode(GPIO.BCM)
+  # GPIO.setwarnings(False)
   SensorAgua()
   SensorCafe()
   ExecutarCafeteira()
+
+Main()

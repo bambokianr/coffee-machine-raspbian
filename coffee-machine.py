@@ -81,6 +81,7 @@ def MedirAgua(cafeteira):
   print('--- [SENSOR] Medindo quantidade de água.')
   # GPIO.output(1, GPIO.HIGH)
   tempoTotal = cafeteira.TempoSensorAgua()
+  print('tempo total', tempoTotal)
   # GPIO.output(1, GPIO.LOW)
   distancia = (tempoTotal * VEL_SOM) / 2
   return distancia
