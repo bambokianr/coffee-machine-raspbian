@@ -44,11 +44,7 @@ _**Figura 2.** O sensor de distância ultrassônico possui dois elementos princi
 
 Na prática, para a medição é necessário alimentar o módulo e colocar o pino TRIGGER - referente ao sinal enviado - em nível alto por cerca de 10us. Assim, o sensor emite uma onda sonora que, ao encontrar um obstáculo, rebate de volta em direção ao módulo. Durante o tempo de emissão e recebimento do sinal, o pino ECHO - referente ao sinal de retorno - permanece em nível alto. Portanto, o cálculo da distância pode ser feito de acordo com o tempo em que o pino ECHO permaneceu em nível alto após o pino TRIGGER ter sido colocado em nível alto.
 
-**!!!! Inserir fórmula**
-$$
-f(x;\mu,\sigma^2) = \frac{1}{\sigma\sqrt{2\pi}}
-e^{ -\frac{1}{2}\left(\frac{x-\mu}{\sigma}\right)^2 }
-$$
+![til](./assets/expressao1.png)
 
 Na fórmula acima, a divisão por 2 deve-se ao fato de que a onda é enviada e rebatida, ou seja, ela percorre 2 vezes a distância procurada. A velocidade do som poder ser considerada idealmente igual a 340 m/s, logo o resultado é obtido em metros se o tempo for definido em segundos.
 
@@ -175,8 +171,8 @@ O Raspbian apresenta um Task Manager de forma nativa, que pode ser usado para mo
 - Prio (Priority): prioridade do processo;
 - PPID (Parent Process ID): ID do pai do processo atual.
 
+![til](./assets/figura3.png)
 
-**!!!! Inserir imagem**
 _**Figura 3.** Task Manager do Raspbian em execução logo após o boot do sistema operacional._
 
 _Observação:_ o Raspbian em questão está sendo utilizado com o LXDE (Lightweight X11 Desktop Environment), que é um ambiente de desktop leve e rápido. Ele foi projetado para ser fácil de usar e elegante, mantendo baixo o uso de recursos. O LXDE usa menos RAM e menos CPU, sendo um ambiente de desktop rico em recursos.
