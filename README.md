@@ -22,7 +22,6 @@ Foi realizado então um estudo para filtrar os sistemas operacionais embarcados 
 - possibilidade de virtualização
 
 _**Tabela 1.** Sistemas operacionais embarcados analisados para escolha e execução em máquina virtual._
-
 ![til](./assets/tabela1.png)
 
 
@@ -35,16 +34,12 @@ A escolha da linguagem para implementação do código se deu com base na necess
 Após garantir um ambiente consistente para a aplicação, o fluxo de controle da cafeteira foi desenhado. Com base na lógica de passos descrita abaixo, os sensores foram escolhidos e o programa foi projetado. 
 
 ![til](./assets/figura1.png)
-
 _**Figura 1.** Fluxo de controle da cafeteira simulada._
-
 
 Para medir tanto o volume de água quanto a quantidade de pó de café disponíveis, foi definido o uso do sensor de distância ultrassônico - [HC-SR04](https://pypi.org/project/GPIOSimulator/). Idealmente, posicionando-o na abertura dos recipientes, esse é capaz de medir a distância até as superfícies a partir de ondas sonoras.
 
 ![til](./assets/figura2.png)
-
 _**Figura 2.** O sensor de distância ultrassônico possui dois elementos principais - um transmissor e um receptor de som, posicionados lado a lado como mostrado na imagem. Para realizar uma medida, o transmissor é ativado e produz uma série de pulsos sonoros, que atingem o obstáculo em questão. Parte das ondas sofrem reflexão e são então captadas pelo receptor.  A diferença de tempo entre a transmissão dos pulsos sonoros e a captação pelo receptor é usada para calcular a distância até o objeto._
-
 
 Na prática, para a medição é necessário alimentar o módulo e colocar o pino TRIGGER - referente ao sinal enviado - em nível alto por cerca de 10us. Assim, o sensor emite uma onda sonora que, ao encontrar um obstáculo, rebate de volta em direção ao módulo. Durante o tempo de emissão e recebimento do sinal, o pino ECHO - referente ao sinal de retorno - permanece em nível alto. Portanto, o cálculo da distância pode ser feito de acordo com o tempo em que o pino ECHO permaneceu em nível alto após o pino TRIGGER ter sido colocado em nível alto.
 
