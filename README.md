@@ -22,7 +22,8 @@ Foi realizado então um estudo para filtrar os sistemas operacionais embarcados 
 - possibilidade de virtualização
 
 _**Tabela 1.** Sistemas operacionais embarcados analisados para escolha e execução em máquina virtual._
-**!!!! Inserir tabela**
+
+![til](./assets/tabela1.png)
 
 
 Uma vez que tudo seria simulado, priorizou-se um sistema operacional em que informações sobre configurações e funcionalidades estivessem disponíveis amplamente para consulta, mais do que escolher por uma instalação de uma imagem já mínima, deixando a máquina com os pacotes de fato essenciais.
