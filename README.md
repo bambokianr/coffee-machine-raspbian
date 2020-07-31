@@ -46,7 +46,7 @@ _**Figura 2.** O sensor de distância ultrassônico possui dois elementos princi
 
 Na prática, para a medição é necessário alimentar o módulo e colocar o pino TRIGGER - referente ao sinal enviado - em nível alto por cerca de 10us. Assim, o sensor emite uma onda sonora que, ao encontrar um obstáculo, rebate de volta em direção ao módulo. Durante o tempo de emissão e recebimento do sinal, o pino ECHO - referente ao sinal de retorno - permanece em nível alto. Portanto, o cálculo da distância pode ser feito de acordo com o tempo em que o pino ECHO permaneceu em nível alto após o pino TRIGGER ter sido colocado em nível alto.
 
-![til](./assets/expressao.png)
+![til](./assets/expressao1.png)
 
 Na fórmula acima, a divisão por 2 deve-se ao fato de que a onda é enviada e rebatida, ou seja, ela percorre 2 vezes a distância procurada. A velocidade do som poder ser considerada idealmente igual a 340 m/s, logo o resultado é obtido em metros se o tempo for definido em segundos.
 
