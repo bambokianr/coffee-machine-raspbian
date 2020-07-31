@@ -41,7 +41,6 @@ _**Figura 1.** Fluxo de controle da cafeteira simulada._
 Para medir tanto o volume de água quanto a quantidade de pó de café disponíveis, foi definido o uso do sensor de distância ultrassônico - [HC-SR04](https://pypi.org/project/GPIOSimulator/). Idealmente, posicionando-o na abertura dos recipientes, esse é capaz de medir a distância até as superfícies a partir de ondas sonoras.
 
 ![til](./assets/figura_2.png)
-
 _**Figura 2.** O sensor de distância ultrassônico possui dois elementos principais - um transmissor e um receptor de som, posicionados lado a lado como mostrado na imagem. Para realizar uma medida, o transmissor é ativado e produz uma série de pulsos sonoros, que atingem o obstáculo em questão. Parte das ondas sofrem reflexão e são então captadas pelo receptor.  A diferença de tempo entre a transmissão dos pulsos sonoros e a captação pelo receptor é usada para calcular a distância até o objeto._
 
 Na prática, para a medição é necessário alimentar o módulo e colocar o pino TRIGGER - referente ao sinal enviado - em nível alto por cerca de 10us. Assim, o sensor emite uma onda sonora que, ao encontrar um obstáculo, rebate de volta em direção ao módulo. Durante o tempo de emissão e recebimento do sinal, o pino ECHO - referente ao sinal de retorno - permanece em nível alto. Portanto, o cálculo da distância pode ser feito de acordo com o tempo em que o pino ECHO permaneceu em nível alto após o pino TRIGGER ter sido colocado em nível alto.
@@ -174,7 +173,6 @@ O Raspbian apresenta um Task Manager de forma nativa, que pode ser usado para mo
 - PPID (Parent Process ID): ID do pai do processo atual.
 
 ![til](./assets/figura_3.png)
-
 _**Figura 3.** Task Manager do Raspbian em execução logo após o boot do sistema operacional._
 
 _Observação:_ o Raspbian em questão está sendo utilizado com o LXDE (Lightweight X11 Desktop Environment), que é um ambiente de desktop leve e rápido. Ele foi projetado para ser fácil de usar e elegante, mantendo baixo o uso de recursos. O LXDE usa menos RAM e menos CPU, sendo um ambiente de desktop rico em recursos.
