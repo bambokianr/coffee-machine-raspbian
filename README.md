@@ -7,11 +7,12 @@
 
 ### :one: Seção 1 - Objetivos do trabalho
 A atividade proposta engloba o estudo e a aplicação de um sistema operacional Linux para o embarcado Raspberry Pi, de forma a configurar a versão escolhida para torná-la enxuta o suficiente a fim de não afetar o desempenho do programa proposto devido às restrições impostas pelo hardware dessa máquina.
+
 A aplicação prática é definida pela simulação do controle de uma cafeteira a partir da interface do Raspberry Pi para intermediar ao programa o recebimento de dados e o envio de comandos.
 
 No entanto, todo a execução foi virtualizada, ou seja, o sistema operacional escolhido foi instalado e executado em máquina virtual, os sensores para controle da cafeteira foram emulados a partir de uma biblioteca de simulação de portas programáveis de entrada e saída de um sistema embarcado e os dados que seriam estabelecidos por sensores ao analisar a cafeteira foram gerados coerentemente de acordo com a lógica implementada.
 
-Dessa maneira, aprofundou-se o conceito de sistemas operacionais configuráveis e a técnica de virtualização.
+Dessa maneira, aprofundou-se o conceito de sistemas operacionais Linux configuráveis e de técnica de virtualização.
 
 
 ### :two: Seção 2 - Desenvolvimento do projeto
@@ -26,11 +27,11 @@ _**Tabela 1.** Sistemas operacionais embarcados analisados para escolha e execu�
 ![til](./assets/tabela1.png)
 
 
-Uma vez que tudo seria simulado, priorizou-se um sistema operacional em que informações sobre configurações e funcionalidades estivessem disponíveis amplamente para consulta, mais do que escolher por uma instalação de uma imagem já mínima, deixando a máquina com os pacotes de fato essenciais.
+Uma vez que tudo seria simulado, priorizou-se um sistema operacional em que informações sobre configurações e funcionalidades estivessem disponíveis amplamente para consulta, mais do que escolher por uma instalação de uma imagem já mínima, deixando a máquina com os pacotes de fato essenciais. Assim, a estratégia seguida foi testar a aplicação desenvolvida em um sistema operacional robusto e depois torná-lo enxuto, eliminando os pacotes desnecessários para a execução do programa.
 
-Realizando um teste inicial com a virtualização do Raspbian, verificou-se o bom desempenho do sistema operacional em execução em uma máquina virtual configurada no software VirtualBox. Portanto, esse foi então definido como o sistema operacional para o desenvolvimento do projeto.
+Realizando um teste inicial com a virtualização do Raspbian, verificou-se o bom desempenho do sistema operacional em execução em uma máquina virtual configurada no software VirtualBox. Portanto, esse foi então definido como o sistema operacional Linux para o desenvolvimento do projeto.
 
-A escolha da linguagem para implementação do código se deu com base na necessidade de emular os sinais dos pinos dos sensores para captar dados da cafeteira em portas de entrada e saída de um possível Raspberry Pi. Uma experimentação foi executada com a biblioteca [Pi GPIO Simulator](https://pypi.org/project/GPIOSimulator/).
+A escolha da linguagem para implementação do código se deu com base na necessidade de emular os sinais dos pinos dos sensores para captar dados da cafeteira em portas de entrada e saída de um possível Raspberry Pi. Uma experimentação foi executada com a biblioteca [GPIO Simulator](https://pypi.org/project/GPIOSimulator/).
 
 Após garantir um ambiente consistente para a aplicação, o fluxo de controle da cafeteira foi desenhado. Com base na lógica de passos descrita abaixo, os sensores foram escolhidos e o programa foi projetado. 
 
@@ -78,7 +79,7 @@ class Cafeteira:
 
 No trecho mostrado acima, as variáveis `porcentAgua` e `porcentCafe` salvam as porcentagens de água e de pó de café disponíveis nos respectivos reservatórios. A partir daí, os métodos `TempoSensorAgua()` e `TempoSensorCafe()` retornam o tempo ECHO em nível alto em segundos que o sensor de distância ultrassônico mencionado anteriormente demoraria para medir uma determinada porcentagem de água ou café, considerando 0.001s para 0%.
 
-Também nota-se a definição dos pinos de saída com o auxílio da biblioteca Pi GPIO Simulator para representar um feedback visual de algumas variáveis que definem o estado da cafeteira.
+Também nota-se a definição dos pinos de saída com o auxílio da biblioteca GPIO Simulator para representar um feedback visual de algumas variáveis que definem o estado da cafeteira.
 
 ```python
 # Sobre a cafeteira, definiu-se:
@@ -158,7 +159,7 @@ def MedirCafe(cafeteira):
  return distancia
 ```
 
-O método `checarCafeteiraPronta()` presente na `classe Cafeteira` faz uso dos sensores simulados definidos pelas funções `SensorAgua()` e `SensorCafe()`, nas quais os pinos de entrada e saída ECHO e TRIGGER são inicializados também com o auxílio da biblioteca Pi GPIO Simulator. Assim, as funções `MedirAgua()` e `MedirCafe()` garantem o funcionamento dos sensores 'artificiais' ao calcular a distância entre cada par módulo superfície a partir do tempo retornado por `cafeteira.TempoSensorAgua()` e `cafeteira.TempoSensorCafe()`. Com isso, `distSensorAgua > 0.154` e `distSensorCafe > 0.145`, garantem a quantidade mínima necessária para se fazer café - 10% de água e 15% de pó de café disponíveis, como se pode confirmar pelo método `FazerCafe()`.
+O método `checarCafeteiraPronta()` presente na `classe Cafeteira` faz uso dos sensores simulados definidos pelas funções `SensorAgua()` e `SensorCafe()`, nas quais os pinos de entrada e saída ECHO e TRIGGER são inicializados também com o auxílio da biblioteca GPIO Simulator. Assim, as funções `MedirAgua()` e `MedirCafe()` garantem o funcionamento dos sensores 'artificiais' ao calcular a distância entre cada par módulo superfície a partir do tempo retornado por `cafeteira.TempoSensorAgua()` e `cafeteira.TempoSensorCafe()`. Com isso, `distSensorAgua > 0.154` e `distSensorCafe > 0.145`, garantem a quantidade mínima necessária para se fazer café - 10% de água e 15% de pó de café disponíveis, como se pode confirmar pelo método `FazerCafe()`.
 
 Por fim, depois de garantir o correto funcionamento da aplicação descrita, analisou-se quais programas de software são imprescindíveis para permitir a execução do projeto. Com isso, foi possível eliminar os demais pacotes de forma a tornar o sistema operacional escolhido mais enxuto. A seguir, são descritas maneiras estudadas para a realização dessa etapa.
 
