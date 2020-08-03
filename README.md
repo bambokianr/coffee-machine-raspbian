@@ -165,7 +165,7 @@ Por fim, depois de garantir o correto funcionamento da aplicação descrita, ana
 A instalação do Raspbian consistiu em baixar a sua imagem [.iso](https://www.raspberrypi.org/downloads/raspberry-pi-desktop/ ) e instalá-la com as configurações padrão no software [VirtualBox](https://www.virtualbox.org/), seguindo o seguinte [tutorial](https://roboticsbackend.com/install-raspbian-desktop-on-a-virtual-machine-virtualbox/ ).
 
 
-![til](./assets/figura_3.png)
+![til](./assets/figura3.png)
 _**Figura 3.** Interface do Raspbian assim que instalado._
 
 O Raspbian apresenta um Task Manager de forma nativa, que pode ser usado para monitorar as tarefas que estão rodando no sistema operacional e a utilização de recursos por cada uma delas. Aqui, encontramos informações tais como:
