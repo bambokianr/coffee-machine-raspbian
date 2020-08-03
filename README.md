@@ -179,8 +179,7 @@ O Raspbian apresenta um Task Manager de forma nativa, que pode ser usado para mo
 - PPID (Parent Process ID): ID do pai do processo atual.
 
 
-![til](./assets/figura_4.png)
-
+![til](./assets/figura4.png)
 _**Figura 4.** Task Manager do Raspbian em execução logo após o boot do sistema operacional._
 
 _Observação:_ o Raspbian em questão está sendo utilizado com o LXDE (Lightweight X11 Desktop Environment), que é um ambiente de desktop leve e rápido. Ele foi projetado para ser fácil de usar e elegante, mantendo baixo o uso de recursos. O LXDE usa menos RAM e menos CPU, sendo um ambiente de desktop rico em recursos.
@@ -209,7 +208,7 @@ Assim, observou-se que as task iniciadas com “lx”, que são relacionadas com
 
 Após isso, utilizou-se outra aplicação nativa “Add/Remove Software” do Raspbian para analisar os pacotes instalados:
 
-![til](./assets/figura_5.png)
+![til](./assets/figura5.png)
 
 _**Figura 5.** “Add / Remove Software” usado para analisar os pacotes automaticamente instalados no Raspbian._
 
@@ -217,7 +216,7 @@ Após observar a quantidade imensa de pacotes instalados e não ser um trabalho 
 
 Com isso, rodando o script do lean-pi no Raspbian, obteve-se o seguinte resultado:
 
-![til](./assets/figura_6.png)
+![til](./assets/figura6.png)
 
 _**Figura 6.** Interface do Raspbian após a utilização do lean-pi._
 
@@ -227,27 +226,27 @@ Assim, observa-se que foi realizada uma limpeza em diversos pacotes, como IDEs d
 ### :three: Seção 3 - Validação do projeto 
 A Figura 7 mostra a configuração de pinos utilizadas neste projeto, juntamente com o significado de cada um. Esta interface gráfica de pinos provém da biblioteca [GPIOSimulator](https://pypi.org/project/GPIOSimulator/) e cada pinos representado está associado a um pino real presente no hardware do Raspberry Pi.
 
-![til](./assets/figura_7.png)
+![til](./assets/figura7.png)
 
 _**Figura 7.** Pinos do simulador utilizados no projeto._
 
 A seguir são feitos os testes para verificar o funcionamento da emulação dos pinos e da máquina de estados do programa da cafeteira. Na Figura 8, o programa acabara de ser iniciado e o pino GPIO2 indica que a cafeteira foi ligada com sucesso, porém o pino GPIO3 indica que falta algum recurso (água ou café) para fazer o café. Na Figura 9, ao adicionar uma quantidade suficiente de café, a cafeteira passa para o estado pronto, indicada pelo pino GPIO3, e aguarda o comando de fazer café. Na Figura 10, ao dar o comando de fazer café, o pino GPIO4 indica que o café está pronto e o pino GPIO3 recebe valor 0 para que possa ser realizada uma nova leitura dos valores de água e pó de café antes de fazer outro café.
 
-![til](./assets/figura_8.png)
+![til](./assets/figura8.png)
 
 _**Figura 8.** Estado em que se acabou de ligar a cafeteira._
 
-![til](./assets/figura_9.png)
+![til](./assets/figura9.png)
 
 _**Figura 9.** Estado em os sensores já analisaram os recipientes de água e café e conclui-se que a cafeteira está pronta para fazer café._
 
-![til](./assets/figura_10.png)
+![til](./assets/figura10.png)
 
 _**Figura 10.** Ao terminar de fazer o café, a cafeteira é passada para estado de não pronto para que possa ser realizada uma nova leitura dos níveis de água e café._
 
 Após a verificação do correto funcionamento do programa e do simulador de pinos, analisou-se o consumo de recursos do sistema operacional. Comparando-se as Figuras 4 e 11, foram removidos processos não essenciais tais como: gvfsd-trash, gvfs-mtp-volume-monitor, gvfs-goa-volume-monitor, gvfs-gphoto2-volume-monitor, gvfs-afc-volume-monitor, gvfs-udisks2-volume-monitor, ssh-agent e gvfsd, que, no geral, são processos que adicionam suporte a ferramentas e acessórios que não são essenciais ao nosso projeto. Assim, foi possível economizar recursos da máquina, como memória, e deixá-los disponíveis para nossa aplicação alvo; além disso, remover processos não essenciais ou que não estão sendo utilizados trazem mais segurança ao sistema operacional, visto que desaloca e remove privilégios de processos inúteis para o propósito do nosso projeto.
 
-![til](./assets/figura_11.png)
+![til](./assets/figura11.png)
 
 _**Figura 10.** Ferramenta Task Manager após a remoção de processos não essenciais._
 
